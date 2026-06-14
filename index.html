@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>نظام ادراة عيادة اسنان</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== شاشة تسجيل الدخول ===== -->
+<div id="loginScreen">
+    <div class="login-card">
+        <div class="login-logo">🦷</div>
+        <div class="login-brand-title">نظام إدارة عيادة الأسنان</div>
+        <div class="login-brand-sub">سجّل الدخول للمتابعة إلى حسابك</div>
+
+        <div class="error-box" id="errorBox"></div>
+
+        <form id="loginForm" onsubmit="return false;">
+            <div class="login-field">
+                <label>اسم المستخدم</label>
+                <div class="login-input-wrap">
+                    <input type="text" id="username" placeholder="أدخل اسم المستخدم" autocomplete="username" required>
+                    <span class="icon">👤</span>
+                </div>
+            </div>
+
+            <div class="login-field">
+                <label>كلمة المرور</label>
+                <div class="login-input-wrap">
+                    <input type="password" id="password" placeholder="أدخل كلمة المرور" autocomplete="current-password" required>
+                    <span class="icon">🔒</span>
+                    <button type="button" class="toggle-pass" id="togglePass" onclick="togglePassword()">👁️</button>
+                </div>
+            </div>
+
+            <div class="login-row-between">
+                <label class="remember">
+                    <input type="checkbox" id="remember"> تذكرني
+                </label>
+            </div>
+
+            <button class="login-btn" id="loginBtn" onclick="login()">
+                <span id="btnText">تسجيل الدخول</span>
+                <span class="spinner" id="spinner"></span>
+            </button>
+        </form>
+
+        <div class="login-foot-note"> All rights reserved by Ahmed Elmaaz©</div>
+    </div>
+</div>
+
+<div id="authCheck" style="display:none;">جاري التحقق من الدخول...</div>
+
+<div class="container" id="appContainer" style="display:none;">
+
+    <div class="header" style="display:flex; align-items:center; gap:15px; flex-wrap:wrap;">
+    <div style="font-size: 32px;">🦷</div>
+    <h1 style="flex:1;">نظام إدارة عيادة الاسنان</h1>
+
+    <div class="user-badge" id="userBadge">👤 <span id="userNameLabel"></span></div>
+
+    <button onclick="toggleDarkMode()" 
+        style="padding:8px 16px; font-size:14px; width:auto; background:#64748b;">
+        🌙
+    </button>
+
+    <button onclick="logout()" class="logout-btn">🚪 خروج</button>
+</div>
+
+    <!-- بيانات المريض -->
+    <div class="card">
+        <div class="title">بيانات المريض</div>
+        <div class="grid">
+            <div><label>الاسم الكامل</label><input id="name" placeholder="أدخل اسم المريض"></div>
+            <div><label>رقم الهاتف</label><input id="phone" placeholder="رقم الجوال" type="tel"></div>
+            <div><label>الطبيب المعالج</label><input id="doctor" placeholder="اسم الطبيب"></div>
+        </div>
+    </div>
+
+    <!-- الجلسة الأولى -->
+    <div class="card">
+        <div class="title">الجلسة الأولى</div>
+        <div class="checkbox">
+            <label><input type="checkbox" id="check1"> كشف أولي</label>
+            <label><input type="checkbox" id="consult1"> استشارة</label>
+            <label><input type="checkbox" id="custom1" onchange="toggleCustom(1)"> إجراء مخصص</label>
+        </div>
+        <div class="grid">
+            <div><label>نوع الإجراء</label><select id="proc1"></select></div>
+            <div id="customFields1" class="custom-proc">
+                <label>اسم الإجراء المخصص</label>
+                <input id="customProc1" placeholder="اكتب اسم الإجراء">
+                <label>السعر (جنيه)</label>
+                <input id="customPrice1" type="number" placeholder="0" oninput="calc(1)">
+            </div>
+            <div><label>المبلغ الكلي</label><input id="total1" readonly></div>
+            <div><label>المبلغ المدفوع</label><input id="paid1" placeholder="0" type="number" oninput="calc(1)"></div>
+            <div><label>المبلغ المتبقي</label><input id="remain1" readonly></div>
+        </div>
+    </div>
+
+    <!-- الجلسة الثانية -->
+    <div class="card">
+        <div class="title">الجلسة الثانية</div>
+        <div class="checkbox">
+            <label><input type="checkbox" id="check2"> كشف</label>
+            <label><input type="checkbox" id="consult2"> استشارة</label>
+            <label><input type="checkbox" id="custom2" onchange="toggleCustom(2)"> إجراء مخصص</label>
+            <div style="margin-right: auto;">
+                <label>تاريخ الجلسة</label>
+                <input id="session2Date" type="date">
+            </div>
+        </div>
+        <div class="grid">
+            <div><label>نوع الإجراء</label><select id="proc2"></select></div>
+            <div id="customFields2" class="custom-proc">
+                <label>اسم الإجراء المخصص</label>
+                <input id="customProc2" placeholder="اكتب اسم الإجراء">
+                <label>السعر (جنيه)</label>
+                <input id="customPrice2" type="number" placeholder="0" oninput="calc(2)">
+            </div>
+            <div><label>المبلغ الكلي</label><input id="total2" readonly></div>
+            <div><label>المبلغ المدفوع</label><input id="paid2" placeholder="0" type="number" oninput="calc(2)"></div>
+            <div><label>المبلغ المتبقي</label><input id="remain2" readonly></div>
+        </div>
+    </div>
+
+    <!-- طريقة الدفع -->
+    <div class="card">
+        <div class="title">طريقة الدفع</div>
+        <select id="payment" style="width: auto; min-width: 220px; padding: 12px 16px;">
+            <option value="كاش">💵 كاش</option>
+            <option value="فيزا">💳 فيزا</option>
+            <option value="تحويل">🏦 تحويل بنكي</option>
+        </select>
+    </div>
+
+    <button onclick="save()">💾 حفظ بيانات المريض</button>
+
+    <!-- الجدول -->
+    <div class="card">
+        <div class="title">سجل المرضى</div>
+        <input type="text" id="searchInput" class="search-box" 
+               placeholder="🔍 ابحث بالاسم أو رقم الهاتف أو التاريخ" 
+               onkeyup="filterTable()">
+
+        <div class="table-wrapper">
+            <div class="top-scrollbar" id="topScroll">
+                <div id="scrollContent" style="height:1px;"></div>
+            </div>
+            <div class="table-container" id="bottomScroll">
+                <table id="table"></table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="main.js"></script>
+
+</body>
+</html>
