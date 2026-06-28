@@ -1,16 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>نظام ادراة عيادة اسنان</title>
+<title>نظام إدارة عيادة أسنان</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ===== شاشة تسجيل الدخول ===== -->
+<!-- شاشة تسجيل الدخول -->
 <div id="loginScreen">
     <div class="login-card">
         <div class="login-logo">🦷</div>
@@ -49,7 +48,7 @@
             </button>
         </form>
 
-        <div class="login-foot-note"> All rights reserved by Ahmed Elmaaz©</div>
+        <div class="login-foot-note">All rights reserved by Ahmed Elmaaz ©</div>
     </div>
 </div>
 
@@ -57,19 +56,18 @@
 
 <div class="container" id="appContainer" style="display:none;">
 
-    <div class="header" style="display:flex; align-items:center; gap:15px; flex-wrap:wrap;">
-    <div style="font-size: 32px;">🦷</div>
-    <h1 style="flex:1;">نظام إدارة عيادة الاسنان</h1>
-
-    <div class="user-badge" id="userBadge">👤 <span id="userNameLabel"></span></div>
-
-    <button onclick="toggleDarkMode()" 
-        style="padding:8px 16px; font-size:14px; width:auto; background:#64748b;">
-        🌙
-    </button>
-
-    <button onclick="logout()" class="logout-btn">🚪 خروج</button>
-</div>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-bar">
+            <div style="font-size:30px;">🦷</div>
+            <h1>نظام إدارة عيادة الأسنان</h1>
+            <div class="header-actions">
+                <div class="user-badge" id="userBadge">👤 <span id="userNameLabel"></span></div>
+                <button onclick="toggleDarkMode()" class="theme-btn">🌙</button>
+                <button onclick="logout()" class="logout-btn">🚪 خروج</button>
+            </div>
+        </div>
+    </div>
 
     <!-- بيانات المريض -->
     <div class="card">
@@ -92,10 +90,8 @@
         <div class="grid">
             <div><label>نوع الإجراء</label><select id="proc1"></select></div>
             <div id="customFields1" class="custom-proc">
-                <label>اسم الإجراء المخصص</label>
-                <input id="customProc1" placeholder="اكتب اسم الإجراء">
-                <label>السعر (جنيه)</label>
-                <input id="customPrice1" type="number" placeholder="0" oninput="calc(1)">
+                <div><label>اسم الإجراء المخصص</label><input id="customProc1" placeholder="اكتب اسم الإجراء"></div>
+                <div><label>السعر (جنيه)</label><input id="customPrice1" type="number" placeholder="0" oninput="calc(1)"></div>
             </div>
             <div><label>المبلغ الكلي</label><input id="total1" readonly></div>
             <div><label>المبلغ المدفوع</label><input id="paid1" placeholder="0" type="number" oninput="calc(1)"></div>
@@ -110,18 +106,16 @@
             <label><input type="checkbox" id="check2"> كشف</label>
             <label><input type="checkbox" id="consult2"> استشارة</label>
             <label><input type="checkbox" id="custom2" onchange="toggleCustom(2)"> إجراء مخصص</label>
-            <div style="margin-right: auto;">
+            <div>
                 <label>تاريخ الجلسة</label>
-                <input id="session2Date" type="date">
+                <input id="session2Date" type="date" style="margin-top:4px;">
             </div>
         </div>
         <div class="grid">
             <div><label>نوع الإجراء</label><select id="proc2"></select></div>
             <div id="customFields2" class="custom-proc">
-                <label>اسم الإجراء المخصص</label>
-                <input id="customProc2" placeholder="اكتب اسم الإجراء">
-                <label>السعر (جنيه)</label>
-                <input id="customPrice2" type="number" placeholder="0" oninput="calc(2)">
+                <div><label>اسم الإجراء المخصص</label><input id="customProc2" placeholder="اكتب اسم الإجراء"></div>
+                <div><label>السعر (جنيه)</label><input id="customPrice2" type="number" placeholder="0" oninput="calc(2)"></div>
             </div>
             <div><label>المبلغ الكلي</label><input id="total2" readonly></div>
             <div><label>المبلغ المدفوع</label><input id="paid2" placeholder="0" type="number" oninput="calc(2)"></div>
@@ -132,7 +126,7 @@
     <!-- طريقة الدفع -->
     <div class="card">
         <div class="title">طريقة الدفع</div>
-        <select id="payment" style="width: auto; min-width: 220px; padding: 12px 16px;">
+        <select id="payment" style="max-width:280px;">
             <option value="كاش">💵 كاش</option>
             <option value="فيزا">💳 فيزا</option>
             <option value="تحويل">🏦 تحويل بنكي</option>
@@ -144,8 +138,8 @@
     <!-- الجدول -->
     <div class="card">
         <div class="title">سجل المرضى</div>
-        <input type="text" id="searchInput" class="search-box" 
-               placeholder="🔍 ابحث بالاسم أو رقم الهاتف أو التاريخ" 
+        <input type="text" id="searchInput" class="search-box"
+               placeholder="🔍 ابحث بالاسم أو رقم الهاتف أو التاريخ"
                onkeyup="filterTable()">
 
         <div class="table-wrapper">
@@ -161,6 +155,5 @@
 </div>
 
 <script src="main.js"></script>
-
 </body>
 </html>
